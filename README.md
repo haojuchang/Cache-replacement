@@ -9,16 +9,18 @@
 
 ## 程式執行方法
 ```=
-python main.py [case] [type]
+python main.py [case] [type] [cache size]
 
 執行範例:
-python main.py case1.txt 0
+python main.py case1.txt 0 4
 ```
 * [case]
     * case 輸入測資檔名 i.e. case1.txt
 * [type]
     * type = 0 : LRU
     * type = 1 : MRU
+* [cache size]
+    * cache 的大小
 
 ## Background
 ### LRU
