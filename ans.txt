@@ -1,0 +1,18 @@
+
+index: 4e
+Cycle  |                                           |  tag   | Hit/Miss
+  1    |  c6(1)   |          |          |          |   c6   | Miss
+  3    |  c6(1)   |  c7(3)   |          |          |   c7   | Miss
+  4    |  c6(4)   |  c7(3)   |          |          |   c6   | Hit
+  6    |  c6(4)   |  c7(3)   |  f6(6)   |          |   f6   | Miss
+  7    |  c6(4)   |  c7(3)   |  f6(6)   |  f7(7)   |   f7   | Miss
+  8    |  c6(4)   |  f8(8)   |  f6(6)   |  f7(7)   |   f8   | Miss
+  10   |  c6(10)  |  f8(8)   |  f6(6)   |  f7(7)   |   c6   | Hit
+  12   |  c6(10)  |  f8(8)   |  c7(12)  |  f7(7)   |   c7   | Miss
+
+index: 4c
+Cycle  |                                           |  tag   | Hit/Miss
+  2    |  c6(2)   |          |          |          |   c6   | Miss
+  5    |  c6(5)   |          |          |          |   c6   | Hit
+  9    |  c6(5)   |  c7(9)   |          |          |   c7   | Miss
+  11   |  c6(11)  |  c7(9)   |          |          |   c6   | Hit
