@@ -111,15 +111,49 @@ Cycle  |                                           |  tag   | Hit/Miss
   11   |  c6(11)  |  c7(9)   |          |          |   c6   | Hit
 ```
 ## 系統流程
-```flow
-st=>start: 開始
-e=>end: 結束
-op=>operation: 我的操作
-op2=>operation: 啦啦啦
-cond=>condition: 是或否？
+1. 執行 main()
+2. 用 readfile() 將資料讀取進來
+3. 用 init_info() 計算出 offset、index、tag 長度
+4. 開始執行 run()
+5. 用 init_cache() 將 cache 建出來
+6. 跑 loop
+7. 看有沒有 hit，miss->8，hit->11
+8. 看有沒有 空的 cache cell 可以放這次 miss 的 tag，有->9，沒有->10
+9. 直接放進空的 cache cell
+10. 執行 cache replace()
+11. loop 還沒結束->6，結束->12
+12. 用 output() 輸出所有的 log
 
-st->op->op2->cond
-cond(yes)->e
-cond(no)->op2
-```
+
 ## Function 說明
+* def main():  
+    * 程式進入位置
+    * 接收參數([case] [type] [cache size] [block size] [way] [address])
+    * 呼叫 init_info 
+    * 呼叫 run
+* def init_info(cache_size, block_size, way, address):  
+    * 計算出 offset_size, index_size, tag_size
+    * return offset_size, index_size, tag_size
+* def hex2bin(HEX):  
+    * 回傳 16進位轉2進位
+    * return 2進位
+* def bin2hex(BIN):  
+    * 回傳 2進位轉16進位
+    * return 16進位
+* def readfile(case_dir):  
+    * 讀取 case 資料，儲存進 list
+    * return list
+* def init_cache(index_size, way):  
+    * 建立 cache 資料結構
+    * return cache
+* def find_empty_node(cache, index):  
+    * pos = 找到空的位置
+    * return pos
+* def hit(cache, index, tag, cycle):  
+    * return bool
+* def replace(cache, index, tag, alg, cycle):  
+    * 根據 alg 決定 要 replace 哪一個
+* def run(lines, offset_size, index_size, tag_size, way, alg):  
+    * 開始執行
+* def output(logs):  
+    * 輸出執行結果
