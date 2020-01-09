@@ -2,6 +2,10 @@
 
 # Cache-replacement
 * 高等計算機結構 Project3
+* 說明
+    * 至少要做兩種Cache replacement演算法！
+    * 其中一種要用LRU。
+    * 上課有說盡量不要寫FIFO或是FILO這種。
 * HackMD 連結: https://hackmd.io/@EzhUyvwWT32Gy69CeyFNyA/ryBRgH4kI
 
 # 目錄
@@ -9,10 +13,10 @@
 
 ## 程式執行方法
 ```=
-python main.py [case] [type] [cache size]
+python main.py [case] [type] [cache size] [block size] [way] [address]
 
 執行範例:
-python main.py case1.txt 0 4
+python main.py case1.txt 0 16 16 4 20
 ```
 * [case]
     * case 輸入測資檔名 i.e. case1.txt
@@ -20,9 +24,17 @@ python main.py case1.txt 0 4
     * type = 0 : LRU
     * type = 1 : MRU
 * [cache size]
-    * cache 的大小
+    * data cache 的大小
+    * 單位 : KB
+* [block size]
+    * black 的個數
+    * 單位 : Byte
+* [way]
+    * w-way set-associative
+* [address]
+    * main memory 有 m-bit address，byte addressable
 
-## Background
+## Data Replacement Alogrithm
 ### LRU
 * 丟棄最近最少使用的資料
 * example
@@ -79,19 +91,35 @@ C74E8
 ```
 
 ## 執行結果
+```=
+index: 4e
+Cycle  |                                           |  tag   | Hit/Miss
+  1    |  c6(1)   |          |          |          |   c6   | Miss
+  3    |  c6(1)   |  c7(3)   |          |          |   c7   | Miss
+  4    |  c6(4)   |  c7(3)   |          |          |   c6   | Hit
+  6    |  c6(4)   |  c7(3)   |  f6(6)   |          |   f6   | Miss
+  7    |  c6(4)   |  c7(3)   |  f6(6)   |  f7(7)   |   f7   | Miss
+  8    |  c6(4)   |  f8(8)   |  f6(6)   |  f7(7)   |   f8   | Miss
+  10   |  c6(10)  |  f8(8)   |  f6(6)   |  f7(7)   |   c6   | Hit
+  12   |  c6(10)  |  f8(8)   |  c7(12)  |  f7(7)   |   c7   | Miss
 
+index: 4c
+Cycle  |                                           |  tag   | Hit/Miss
+  2    |  c6(2)   |          |          |          |   c6   | Miss
+  5    |  c6(5)   |          |          |          |   c6   | Hit
+  9    |  c6(5)   |  c7(9)   |          |          |   c7   | Miss
+  11   |  c6(11)  |  c7(9)   |          |          |   c6   | Hit
+```
 ## 系統流程
-```mermaid
-classDiagram
+```flow
+st=>start: 開始
+e=>end: 結束
+op=>operation: 我的操作
+op2=>operation: 啦啦啦
+cond=>condition: 是或否？
 
-main -- > LRU : type == 0
-main -- > MRU : type == 1
-
-main : type:int
-main : cache_size:int
-main : chahe:list
-main : readfile()
-main : LRU()
-main : MRU()
+st->op->op2->cond
+cond(yes)->e
+cond(no)->op2
 ```
 ## Function 說明
